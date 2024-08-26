@@ -5,15 +5,16 @@ import pandas as pd
 from Config import file_path, dict_morse
 
 
-msg = '-.-. .- .-. --- .-.. .. -. .-'
-
 
 def decode_morse(msg, dict_morse):
-    msg_lst = msg.split(" ")
+    msg_lst = msg.split("  ")
     msg_claro = [] 
+
     for letter in msg_lst :
-        msg_claro.append(dict_morse[letter])
-    return "".join(msg_claro)
+        letters = letter.split(" ")
+        decode_letter = (dict_morse[letter] for letter in letters)
+        msg_claro.append("".join(decode_letter))
+    return " ".join(msg_claro)
 
 
 def save_clear_msg_csv_hdr(file_path, msg, dict_morse):
@@ -28,5 +29,15 @@ def save_clear_msg_csv_hdr(file_path, msg, dict_morse):
     df.to_csv(file_path, mode='a', index=False, header=hdr)
 
 
-if __name__ == "__main__":
-    save_clear_msg_csv_hdr(file_path, msg, dict_morse)
+#if __name__ == "__main__":
+ #   save_clear_msg_csv_hdr(file_path, msg, dict_morse)
+
+try:
+    x = str(input('digite o codigo'))
+except:
+    print('Voce não gigitou o codigo')
+else:
+    print(decode_morse(x, dict_morse))
+    save_clear_msg_csv_hdr(file_path,x, dict_morse)
+finally:
+    print('Muito obriga do por usar o decode')
